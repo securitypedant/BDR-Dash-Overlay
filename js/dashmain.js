@@ -24,24 +24,24 @@ function dashMain() {
     canvas.height = window.innerHeight -25;
 
     var ctx = canvas.getContext('2d');
-        function update(currentDelta) {
-            updateId = requestAnimationFrame(update);
+    function update(currentDelta) {
+        updateId = requestAnimationFrame(update);
 
-            var delta = currentDelta - previousDelta;
+        var delta = currentDelta - previousDelta;
 
-            if (fpsLimit && delta < 1000 / fpsLimit) {
-                return;
-            }
-
-            displayThrottle(canvas, ctx);
-            displayBrake(canvas, ctx);
-            displaySpeedo(canvas, ctx);
-            displayGMeter(canvas, ctx);
-
-            previousDelta = currentDelta;
+        if (fpsLimit && delta < 1000 / fpsLimit) {
+            return;
         }
-        // Start the loop to draw the display.
-        requestAnimationFrame(update);
+
+        displayThrottle(canvas, ctx);
+        displayBrake(canvas, ctx);
+        displaySpeedo(canvas, ctx);
+        displayGMeter(canvas, ctx);
+
+        previousDelta = currentDelta;
+    }
+    // Start the loop to draw the display.
+    requestAnimationFrame(update);
 }
 
 function displayThrottle(canvas, ctx) {
@@ -95,7 +95,7 @@ function displayGMeter(canvas, ctx) {
     ctx.fillStyle = "grey";
     ctx.fill();
 
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 3;
     ctx.strokeStyle = 'white';
     ctx.stroke();
 
@@ -104,6 +104,23 @@ function displayGMeter(canvas, ctx) {
     ctx.lineWidth = 1;
     ctx.strokeStyle = 'white';
     ctx.stroke();
+
+    // Draw lines in the circles
+    ctx.beginPath();
+    ctx.moveTo(canvas.width -200, canvas.height -100);
+    ctx.lineTo(canvas.width -200, canvas.height -20);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(canvas.width -240, canvas.height -60);
+    ctx.lineTo(canvas.width -160, canvas.height -60);
+    ctx.stroke();
+
+    // Draw the red dot to indicate G
+    ctx.beginPath();
+    ctx.arc(canvas.width -200, canvas.height -60, 5, 0, 2 * Math.PI, false);
+    ctx.fillStyle = "red";
+    ctx.fill();
 }
 
 function displaySpeedo(canvas, ctx) {
